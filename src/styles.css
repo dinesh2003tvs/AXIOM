@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    color: #172431;
+    background: #f5f7fa;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  :focus-visible {
+    outline: 3px solid #81c7ec;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .field-control {
+    @apply mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-ink placeholder:text-slate-400 focus:border-sky-500 focus:outline-none;
+  }
+
+  .surface {
+    @apply rounded-xl border border-slate-200 bg-white shadow-sm;
+  }
+}
