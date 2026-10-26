@@ -16,6 +16,8 @@ npm.cmd test
 npm.cmd run build
 ```
 
+Vercel builds use the site root (`/`) automatically. GitHub Pages builds set `GITHUB_PAGES=true` in the deployment workflow so generated assets use the `/AXIOM/` project-site path.
+
 ## Local data and files
 
 - Projects, intake drafts, role selection, UI preferences, knowledge entries, resource masters, and governance settings are saved in browser `localStorage`.

@@ -3,6 +3,6 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/AXIOM/",
+  base: process.env.GITHUB_PAGES === "true" ? "/AXIOM/" : "/",
   server: { port: 5173 }
 });
