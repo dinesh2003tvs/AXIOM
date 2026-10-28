@@ -69,7 +69,7 @@ export function Badge({ children, tone = "slate" }) {
 }
 
 export function Modal({ title, description, onClose, children, wide = false }) {
-  return <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/50 p-4" role="presentation" onMouseDown={event => event.target === event.currentTarget && onClose()}>
+  return <div className="fixed inset-0 z-[80] flex items-center justify-center overflow-y-auto bg-slate-950/60 backdrop-blur-xs p-4" role="presentation" onMouseDown={event => event.target === event.currentTarget && onClose()}>
     <section className={`my-auto w-full ${wide ? "max-w-2xl" : "max-w-lg"} rounded-2xl bg-white p-5 shadow-2xl sm:p-6`} role="dialog" aria-modal="true" aria-label={title}>
       <div className="mb-5 flex items-start justify-between gap-4">
         <div><h2 className="text-xl font-bold">{title}</h2>{description && <p className="mt-1 text-sm text-muted">{description}</p>}</div>
