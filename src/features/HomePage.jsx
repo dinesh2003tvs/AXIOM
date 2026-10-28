@@ -44,7 +44,7 @@ export default function HomePage({ onOpenProject, onNewProject, notify }) {
       </div>
     </Card>
     <div className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-      <Card title="Projects" action={<Button variant="ghost" onClick={() => notify("Choose Portfolio & Governance from the navigation to browse all projects.")}>Portfolio <ArrowRight size={15}/></Button>}>
+      <Card title="Projects" action={<Button variant="ghost" onClick={() => notify("Choose Project Workspace from the navigation to browse all projects.")}>Portfolio <ArrowRight size={15}/></Button>}>
         <div className="divide-y divide-slate-100">
           {projects.length === 0 && <p className="py-8 text-center text-sm text-muted">No projects match this role view yet.</p>}
           {projects.map(project => <button key={project.id} onClick={() => onOpenProject(project)} className="flex w-full items-center gap-3 py-3 text-left hover:bg-slate-50">

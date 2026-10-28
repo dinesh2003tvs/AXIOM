@@ -146,8 +146,7 @@ export const BUSINESS_VALUE_DATA = [
 
 export const CONFIDENCE_METRICS = [
   { label: "Scope Stability", value: "80%", dotColor: "bg-emerald-500" },
-  { label: "Schedule Predictability", value: "70%", dotColor: "bg-amber-500" },
-  { label: "Cost Predictability", value: "65%", dotColor: "bg-amber-400" },
+  { label: "Timeline Adherence", value: "70%", dotColor: "bg-amber-500" },
   { label: "Resource Availability", value: "78%", dotColor: "bg-sky-500" },
   { label: "Overall Health", value: "72%", dotColor: "bg-indigo-400" }
 ];

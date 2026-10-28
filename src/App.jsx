@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { Component, useEffect, useMemo, useRef, useState } from "react";
 import {
   Bell,
   BookOpen,
@@ -15,9 +15,11 @@ import {
   Search,
   Settings2,
   ShieldCheck,
+  Upload,
   X
 } from "lucide-react";
 import { NAV_ITEMS, ROLES } from "./data/seed.js";
+import { parseProjectPlanFile } from "./lib/parsePlan.js";
 import { useAppData } from "./state/AppDataContext.jsx";
 import { Button, Field, Modal, Notice } from "./components/ui.jsx";
 import ExecutiveDashboard from "./features/ExecutiveDashboard.jsx";
@@ -275,10 +277,10 @@ export default function App() {
           </div>
         )}
 
-        {/* WORKSPACE Category header */}
+        {/* Navigation Category header */}
         {!collapsed && (
           <p className="px-5 pb-1.5 pt-5 text-[10.5px] font-bold uppercase tracking-[0.2em] text-slate-500">
-            WORKSPACE
+            NAVIGATION
           </p>
         )}
 
@@ -402,7 +404,9 @@ export default function App() {
           </button>
 
           <strong className="text-sm font-bold text-slate-700">
-            {NAV_ITEMS.find((item) => item[0] === page)?.[1] || "AXIOM"}
+            {page === "workspace"
+              ? "Project Workspace"
+              : NAV_ITEMS.find((item) => item[0] === page)?.[1] || "AXIOM"}
           </strong>
 
           {/* Search Bar */}
@@ -520,7 +524,7 @@ export default function App() {
 
           {storageError && <Notice type="error">{storageError}</Notice>}
 
-          {renderPage()}
+          <ErrorBoundary onReset={() => navigate("portfolio")}>{renderPage()}</ErrorBoundary>
         </main>
       </div>
 
@@ -587,11 +591,77 @@ export default function App() {
   );
 }
 
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error("ErrorBoundary caught error:", error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="surface p-6 rounded-2xl border border-red-200 bg-red-50/60 max-w-2xl mx-auto my-8">
+          <h2 className="text-base font-bold text-red-900">Something went wrong</h2>
+          <p className="mt-1 text-xs text-red-700">
+            {this.state.error?.message || "An unexpected error occurred while loading this view."}
+          </p>
+          <div className="mt-4 flex gap-2">
+            <Button
+              variant="secondary"
+              onClick={() => {
+                this.setState({ hasError: false, error: null });
+                if (this.props.onReset) this.props.onReset();
+              }}
+            >
+              Return to Project Workspace
+            </Button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 function CreateProjectModal({ onClose, onCreate }) {
   const [name, setName] = useState("");
   const [fn, setFn] = useState("Enterprise Services");
   const [businessProblem, setBusinessProblem] = useState("");
   const [error, setError] = useState("");
+  const [uploadedPlan, setUploadedPlan] = useState(null);
+  const [uploadSuccess, setUploadSuccess] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const handleFileUpload = async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setIsUploading(true);
+    setError("");
+    try {
+      const parsed = await parseProjectPlanFile(file);
+      if (parsed.name) setName(parsed.name);
+      if (parsed.fn) setFn(parsed.fn);
+      if (parsed.businessProblem) setBusinessProblem(parsed.businessProblem);
+      setUploadedPlan(parsed);
+      const totalCount =
+        parsed.projectPlan?.stats?.totalTasks || parsed.projectPlan?.items?.length || 0;
+      setUploadSuccess(
+        `Plan loaded from "${file.name}" (${totalCount} tasks & milestones populated).`
+      );
+    } catch (err) {
+      console.error(err);
+      setError("Failed to parse project plan spreadsheet. Please check the file format.");
+    } finally {
+      setIsUploading(false);
+      event.target.value = "";
+    }
+  };
 
   const submit = (event) => {
     event.preventDefault();
@@ -599,7 +669,14 @@ function CreateProjectModal({ onClose, onCreate }) {
       setError("Project title is required.");
       return;
     }
-    onCreate({ name, fn, businessProblem });
+    onCreate({
+      name: name.trim(),
+      fn: fn.trim(),
+      businessProblem: businessProblem.trim(),
+      pm: uploadedPlan?.pm || "Priya Shah",
+      due: uploadedPlan?.due || "",
+      projectPlan: uploadedPlan?.projectPlan || null
+    });
   };
 
   return (
@@ -629,11 +706,34 @@ function CreateProjectModal({ onClose, onCreate }) {
           rows={3}
           placeholder="Optional starting context"
         />
+        {uploadSuccess && (
+          <div className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs font-semibold text-emerald-800">
+            <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+            <span>{uploadSuccess}</span>
+          </div>
+        )}
         <Notice type="info">
           This creates a local record only. External AI discovery is not connected.
         </Notice>
         {error && <Notice type="error">{error}</Notice>}
-        <div className="flex justify-end gap-2 pt-2">
+        <div className="flex items-center justify-end gap-2 pt-2">
+          <input
+            type="file"
+            ref={fileInputRef}
+            accept=".xlsx,.xls,.csv"
+            onChange={handleFileUpload}
+            className="hidden"
+          />
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isUploading}
+            className="flex items-center gap-1.5 border-slate-300 text-slate-700 hover:bg-slate-100 cursor-pointer"
+          >
+            <Upload size={14} className={isUploading ? "animate-spin" : ""} />
+            {isUploading ? "Loading plan..." : "Upload plan"}
+          </Button>
           <Button type="button" onClick={onClose}>
             Cancel
           </Button>

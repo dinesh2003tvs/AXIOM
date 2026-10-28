@@ -3,8 +3,7 @@ export const ROLES = ["CXO / Leadership", "PMO", "PM"];
 export const NAV_ITEMS = [
   ["home", "Home"],
   ["intake", "Project Intake"],
-  ["portfolio", "Portfolio & Governance"],
-  ["workspace", "Project Workspace"],
+  ["portfolio", "Project Workspace"],
   ["knowledge", "Knowledge Repository"],
   ["admin", "Admin & Masters"]
 ];
