@@ -138,7 +138,7 @@ export default function ExecutiveDashboard({ notify, onSelectProject }) {
 
       {/* ROW 1: 6 KPI CARDS */}
       <div className="relative z-10 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6">
-        {/* KPI 1: Strategic Projects */}
+        {/* KPI 1: All Projects */}
         <div className="rounded-xl border border-slate-200/80 bg-white p-3.5 shadow-2xs hover:shadow-sm transition-all">
           <div className="flex items-center gap-3">
             <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#1e70eb] text-white shadow-2xs">
@@ -146,7 +146,7 @@ export default function ExecutiveDashboard({ notify, onSelectProject }) {
             </div>
             <div className="min-w-0">
               <span className="block text-[11px] font-semibold text-slate-500 leading-tight">
-                Strategic Projects
+                All Projects
               </span>
               <strong className="block text-[25px] xl:text-[27px] font-black leading-none text-slate-900 mt-0.5">
                 {KPI_SUMMARY.strategicProjects.value}
@@ -218,7 +218,7 @@ export default function ExecutiveDashboard({ notify, onSelectProject }) {
           </div>
         </div>
 
-        {/* KPI 5: Total Investment */}
+        {/* KPI 5: Total Budget */}
         <div className="rounded-xl border border-slate-200/80 bg-white p-3.5 shadow-2xs hover:shadow-sm transition-all">
           <div className="flex items-center gap-3">
             <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#6366f1] text-white shadow-2xs">
@@ -226,7 +226,7 @@ export default function ExecutiveDashboard({ notify, onSelectProject }) {
             </div>
             <div className="min-w-0">
               <span className="block text-[11px] font-semibold text-slate-500 leading-tight">
-                Total Investment
+                Total Budget
               </span>
               <strong className="block text-[23px] xl:text-[25px] font-black leading-none text-slate-900 mt-0.5 whitespace-nowrap">
                 {KPI_SUMMARY.totalInvestment.value}
@@ -238,7 +238,7 @@ export default function ExecutiveDashboard({ notify, onSelectProject }) {
           </div>
         </div>
 
-        {/* KPI 6: Expected Business Value */}
+        {/* KPI 6: Actual Spent */}
         <div className="rounded-xl border border-slate-200/80 bg-white p-3.5 shadow-2xs hover:shadow-sm transition-all">
           <div className="flex items-center gap-3">
             <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#059669] text-white shadow-2xs">
@@ -246,7 +246,7 @@ export default function ExecutiveDashboard({ notify, onSelectProject }) {
             </div>
             <div className="min-w-0">
               <span className="block text-[11px] font-semibold text-slate-500 leading-tight">
-                Expected Business Value
+                Actual Spent
               </span>
               <strong className="block text-[23px] xl:text-[25px] font-black leading-none text-slate-900 mt-0.5 whitespace-nowrap">
                 {KPI_SUMMARY.expectedBusinessValue.value}
@@ -480,12 +480,12 @@ export default function ExecutiveDashboard({ notify, onSelectProject }) {
           </div>
         </div>
 
-        {/* Card 2: Expected vs Realized Business Value */}
+        {/* Card 2: Project Intake & Approval Trends */}
         <div className="rounded-xl border border-slate-200/80 bg-white p-4 shadow-2xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between">
               <h2 className="text-sm font-bold text-slate-900">
-                Expected vs Realized Business Value
+                Project Intake & Approval Trends
               </h2>
               <div className="relative">
                 <select
@@ -507,11 +507,11 @@ export default function ExecutiveDashboard({ notify, onSelectProject }) {
             <div className="flex items-center gap-4 mt-2 text-[10.5px]">
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#38bdf8]" />
-                <span className="text-slate-600 font-medium">Expected Value</span>
+                <span className="text-slate-600 font-medium">Approved Project</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#22c55e]" />
-                <span className="text-slate-600 font-medium">Realized Value</span>
+                <span className="text-slate-600 font-medium">Project Intake</span>
               </div>
             </div>
           </div>
@@ -985,8 +985,10 @@ export default function ExecutiveDashboard({ notify, onSelectProject }) {
               </button>
               <button
                 onClick={() => {
+                  const proj = selectedProjectDetail;
                   setSelectedProjectDetail(null);
-                  notify(`Opened workspace for ${selectedProjectDetail.name}`);
+                  if (onSelectProject) onSelectProject(proj);
+                  notify(`Opened workspace for ${proj.name}`);
                 }}
                 className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-bold text-white hover:bg-blue-700 inline-flex items-center gap-1.5"
               >

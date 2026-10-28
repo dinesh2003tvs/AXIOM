@@ -41,16 +41,19 @@ export function AppDataProvider({ children }) {
       name: values.name.trim(),
       fn: values.fn?.trim() || "Enterprise Services",
       pm: values.pm?.trim() || "Unassigned",
-      status: "Open",
-      rag: "Grey",
-      progress: 0,
+      status: values.status || "Open",
+      rag: values.rag || "Grey",
+      progress: values.progress ?? 0,
       due: values.due || "",
-      health: "New intake",
+      health: values.health || "New intake",
       businessProblem: values.businessProblem?.trim() || "",
       intake: values.intakeForm || {},
       notes: [],
       actions: [],
-      attachments: values.attachmentIds || []
+      attachments: values.attachmentIds || [],
+      projectPlan: values.projectPlan || null,
+      budget: values.budget || null,
+      team: values.team || null
     };
     setData(current => ({
       ...current,

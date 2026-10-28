@@ -20,7 +20,7 @@ export default function PortfolioPage({ onOpenProject, onNewProject, notify }) {
   const manage = data.role === "PMO";
 
   return <div className="space-y-5">
-    <PageHeading eyebrow="PORTFOLIO & GOVERNANCE" title="Project governance overview" description="Review lifecycle, project health, assignments, and delivery progress stored in this browser." actions={<>
+    <PageHeading eyebrow="PROJECT WORKSPACE" title="Project workspace overview" description="Review lifecycle, project health, assignments, and delivery progress stored in this browser." actions={<>
       <Button onClick={() => setRag(rag === "All" ? "Amber" : "All")}><Filter size={15}/> {rag === "All" ? "Show at risk" : "Clear risk filter"}</Button>
       {manage && <Button variant="primary" onClick={onNewProject}><UserRoundPlus size={15}/> New project</Button>}
     </>}/>

@@ -469,7 +469,7 @@ export function BusinessValueBarChart({ data = [] }) {
           textAnchor="middle"
           className="text-[8.5px] fill-slate-400 font-semibold"
         >
-          $ Millions
+          Volume
         </text>
 
         {yTicks.map((tick) => {
@@ -522,7 +522,7 @@ export function BusinessValueBarChart({ data = [] }) {
                 onMouseEnter={() =>
                   setHoveredBar({
                     period: item.period,
-                    type: "Expected",
+                    type: "Approved Project",
                     val: item.expected
                   })
                 }
@@ -549,7 +549,7 @@ export function BusinessValueBarChart({ data = [] }) {
                 onMouseEnter={() =>
                   setHoveredBar({
                     period: item.period,
-                    type: "Realized",
+                    type: "Project Intake",
                     val: item.realized
                   })
                 }
@@ -580,7 +580,7 @@ export function BusinessValueBarChart({ data = [] }) {
 
       {hoveredBar && (
         <div className="absolute top-2 right-4 rounded bg-slate-900 px-2 py-1 text-[9.5px] text-white shadow-lg pointer-events-none font-medium">
-          {hoveredBar.period} · {hoveredBar.type}: ${hoveredBar.val}M
+          {hoveredBar.period} · {hoveredBar.type}: {hoveredBar.val}
         </div>
       )}
     </div>
