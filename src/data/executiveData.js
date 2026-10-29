@@ -1,8 +1,6 @@
 export const KPI_SUMMARY = {
   strategicProjects: {
-    value: 28,
-    change: "↑ 12% vs. last quarter",
-    changeType: "positive"
+    value: 28
   },
   onTrack: {
     percentage: "64%",
@@ -17,13 +15,11 @@ export const KPI_SUMMARY = {
     count: "3 projects"
   },
   totalInvestment: {
-    value: "$ 12.5M",
-    change: "↑ 8% vs. last quarter",
-    changeType: "positive"
+    value: "₹ 12.5M"
   },
   expectedBusinessValue: {
-    value: "$ 18.2M",
-    roi: "146% ROI (projected)"
+    value: "₹ 10.3M",
+    roi: "82% spent so far"
   }
 };
 

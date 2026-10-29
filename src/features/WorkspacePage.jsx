@@ -1178,7 +1178,7 @@ function ProjectBudget({ project, updateProject, canEdit, notify }) {
             </span>
             <div>
               <span className="block text-xs font-semibold text-slate-500">Budget Allocated</span>
-              <strong className="text-xl font-bold text-slate-900">${Number(allocated).toLocaleString()}</strong>
+              <strong className="text-xl font-bold text-slate-900">₹{Number(allocated).toLocaleString()}</strong>
             </div>
           </div>
         </Card>
@@ -1190,7 +1190,7 @@ function ProjectBudget({ project, updateProject, canEdit, notify }) {
             </span>
             <div>
               <span className="block text-xs font-semibold text-slate-500">Actual Spent</span>
-              <strong className="text-xl font-bold text-slate-900">${Number(actualSpent).toLocaleString()}</strong>
+              <strong className="text-xl font-bold text-slate-900">₹{Number(actualSpent).toLocaleString()}</strong>
             </div>
           </div>
         </Card>
@@ -1203,7 +1203,7 @@ function ProjectBudget({ project, updateProject, canEdit, notify }) {
             <div>
               <span className="block text-xs font-semibold text-slate-500">Remaining Budget</span>
               <strong className={`text-xl font-bold ${isOverBudget ? "text-rose-600" : "text-slate-900"}`}>
-                ${remaining.toLocaleString()}
+                ₹{remaining.toLocaleString()}
               </strong>
             </div>
           </div>
@@ -1216,7 +1216,7 @@ function ProjectBudget({ project, updateProject, canEdit, notify }) {
             </span>
             <div>
               <span className="block text-xs font-semibold text-slate-500">Forecasted Final Cost</span>
-              <strong className="text-xl font-bold text-slate-900">${Number(forecast).toLocaleString()}</strong>
+              <strong className="text-xl font-bold text-slate-900">₹{Number(forecast).toLocaleString()}</strong>
             </div>
           </div>
         </Card>
@@ -1271,9 +1271,9 @@ function ProjectBudget({ project, updateProject, canEdit, notify }) {
                 return (
                   <tr key={cat.name} className="hover:bg-slate-50">
                     <td className="py-3 font-semibold text-slate-800">{cat.name}</td>
-                    <td className="text-slate-600">${cat.allocated.toLocaleString()}</td>
-                    <td className="font-medium text-slate-900">${cat.spent.toLocaleString()}</td>
-                    <td className="text-slate-600">${catRemaining.toLocaleString()}</td>
+                    <td className="text-slate-600">₹{cat.allocated.toLocaleString()}</td>
+                    <td className="font-medium text-slate-900">₹{cat.spent.toLocaleString()}</td>
+                    <td className="text-slate-600">₹{catRemaining.toLocaleString()}</td>
                     <td>
                       <span className="inline-flex items-center gap-2">
                         <span className="w-14 h-1.5 rounded-full bg-slate-100 overflow-hidden inline-block">
@@ -1298,21 +1298,21 @@ function ProjectBudget({ project, updateProject, canEdit, notify }) {
         <Card title="Update Budget Baseline">
           <div className="grid gap-4 sm:grid-cols-3">
             <Field
-              label="Budget Allocated ($)"
+              label="Budget Allocated (₹)"
               type="number"
               value={allocated}
               onChange={setAllocated}
               min="0"
             />
             <Field
-              label="Actual Spent ($)"
+              label="Actual Spent (₹)"
               type="number"
               value={actualSpent}
               onChange={setActualSpent}
               min="0"
             />
             <Field
-              label="Forecasted Final Cost ($)"
+              label="Forecasted Final Cost (₹)"
               type="number"
               value={forecast}
               onChange={setForecast}

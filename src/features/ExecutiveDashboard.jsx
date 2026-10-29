@@ -151,9 +151,6 @@ export default function ExecutiveDashboard({ notify, onSelectProject }) {
               <strong className="block text-[25px] xl:text-[27px] font-black leading-none text-slate-900 mt-0.5">
                 {KPI_SUMMARY.strategicProjects.value}
               </strong>
-              <div className="mt-1 text-[11px] font-bold text-emerald-600 leading-tight">
-                {KPI_SUMMARY.strategicProjects.change}
-              </div>
             </div>
           </div>
         </div>
@@ -231,9 +228,6 @@ export default function ExecutiveDashboard({ notify, onSelectProject }) {
               <strong className="block text-[23px] xl:text-[25px] font-black leading-none text-slate-900 mt-0.5 whitespace-nowrap">
                 {KPI_SUMMARY.totalInvestment.value}
               </strong>
-              <div className="mt-1 text-[11px] font-bold text-emerald-600 leading-tight">
-                {KPI_SUMMARY.totalInvestment.change}
-              </div>
             </div>
           </div>
         </div>
